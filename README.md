@@ -20,6 +20,23 @@ A lightweight Python utility for cleaning and deduplicating Lithuanian (.lt) dom
    ```
 3. Find cleaned domains in `assets/output.txt`.
 
+## Domain Removal Utility (v1.6)
+
+Subtract processed domains from larger lists:
+
+1. Place full domain list in `assets/input-all.txt`
+2. Place domains to remove in `assets/input-removees.txt`
+3. Run:
+   ```bash
+   python3 src/remove_domains.py
+   ```
+4. Find filtered results in `assets/output-removed.txt`
+
+**Example:**
+- `input-all.txt`: 1,000,000 domains
+- `input-removees.txt`: 100,000 processed domains
+- `output.txt`: 900,000 remaining domains
+
 ## Example
 **Input (`assets/input.txt`):**
 ```

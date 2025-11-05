@@ -30,6 +30,13 @@ This file tracks the roadmap for new features and improvements to the Domain Cle
 - Add hyphen validation (no hyphens at start/end of labels, no consecutive hyphens)
 - Improved input normalization
 
+## v1.6 Domain Removal Utility ✅
+- Generic domain filtering tool (`src/remove_domains.py`)
+- Remove domains from `assets/input-all.txt` that exist in `assets/input-removees.txt`
+- Output clean list to `assets/output-removed.txt`
+- Memory-efficient processing for large datasets (millions of domains)
+- Useful for subtracting processed domains from full lists
+
 ---
 
 ## v2.0 Multiple File Input
