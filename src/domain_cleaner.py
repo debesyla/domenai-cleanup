@@ -60,6 +60,37 @@ def clean_domains():
     print(f"Processed {processed_count} non-empty lines.")
     print(f"⚠️ {skipped_count} lines skipped. See {errors_file} for details.")
 
+def is_valid_domain_length(domain: str) -> tuple[bool, str | None]:
+    """Validate domain length. Returns (is_valid, reason).
+    
+    Domain labels must be 1-63 characters. Single character domains are illegal.
+    """
+    labels = domain.split('.')
+    for label in labels:
+        if len(label) == 1:
+            return False, "single character label"
+        if len(label) > 63:
+            return False, "label exceeds 63 characters"
+    return True, None
+
+def is_valid_hyphen_rules(domain: str) -> tuple[bool, str | None]:
+    """Validate hyphen rules. Returns (is_valid, reason).
+    
+    Hyphens are legal but cannot be:
+    - First character of a label
+    - Last character of a label
+    - Two in a row (consecutive hyphens)
+    """
+    labels = domain.split('.')
+    for label in labels:
+        if label.startswith('-'):
+            return False, "hyphen at start of label"
+        if label.endswith('-'):
+            return False, "hyphen at end of label"
+        if '--' in label:
+            return False, "consecutive hyphens"
+    return True, None
+
 def process_domain(raw: str):
     """Process a single raw input line. Returns (domain, None) on success or (None, reason) on skip.
 
@@ -105,12 +136,24 @@ def process_domain(raw: str):
     if suffix in GOV_SUFFIXES or (suffix == "lt" and ext.domain in GOV_DOMAINS):
         if ext.subdomain:
             domain = f"{ext.subdomain}.{domain}"
+        is_valid, reason = is_valid_domain_length(domain)
+        if not is_valid:
+            return None, reason
+        is_valid, reason = is_valid_hyphen_rules(domain)
+        if not is_valid:
+            return None, reason
         return domain, None
 
     # Commercial .lt: reject if subdomain exists, otherwise accept
     if suffix == "lt":
         if ext.subdomain:
             return None, "non-govt subdomain"
+        is_valid, reason = is_valid_domain_length(domain)
+        if not is_valid:
+            return None, reason
+        is_valid, reason = is_valid_hyphen_rules(domain)
+        if not is_valid:
+            return None, reason
         return domain, None
 
     return None, "non-.lt domain"

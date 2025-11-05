@@ -16,7 +16,7 @@ This file tracks the roadmap for new features and improvements to the Domain Cle
 - Add automated tests for edge cases, government domain logic, and malformed input
 - Improve reliability and maintainability
 
-## v1.4 Robustness & Edge Case Handling
+## v1.4 Robustness & Edge Case Handling ✅
 - **Memory optimization**: Stream processing for very large files (millions of domains)
 - **Multi-level subdomain handling**: Clarify and test behavior for `portal.admin.lrv.lt`
 - **IDN support**: Handle Lithuanian characters (ąčęėįšųū) and Punycode domains
@@ -24,6 +24,11 @@ This file tracks the roadmap for new features and improvements to the Domain Cle
 - **Encoding flexibility**: Support multiple file encodings beyond UTF-8, handle BOM
 - **Offline mode**: Configure tldextract caching for offline operation
 - **Nested government domains**: Handle edge cases like `gov.edu.lt`
+
+## v1.5 Domain Validation Rules ✅
+- Add domain length validation (1-63 characters per label, reject single-character labels)
+- Add hyphen validation (no hyphens at start/end of labels, no consecutive hyphens)
+- Improved input normalization
 
 ---
 
